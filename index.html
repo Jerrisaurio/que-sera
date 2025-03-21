@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi werita ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            overflow-x: hidden;
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+            cursor: none;
+        }
+
+        #background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: background-color 1s ease;
+            z-index: -1;
+        }
+
+        #custom-cursor {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,223,89,0.6) 70%, transparent 100%);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: 0 0 10px rgba(255, 165, 0, 0.7);
+        }
+
+        #custom-cursor:after {
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 165, 0, 0.8);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease;
+        }
+
+        #page1 {
+            opacity: 1;
+        }
+
+        #page2 {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .cloud-button {
+            background-color: white;
+            border: none;
+            padding: 30px 60px;
+            font-size: 1.5rem;
+            cursor: none;
+            position: relative;
+            border-radius: 50px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            font-weight: bold;
+            color: #008259;
+        }
+
+        .cloud-button:before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            width: 100px;
+            height: 40px;
+            background-color: white;
+            border-radius: 50px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .cloud-button:after {
+            content: "";
+            position: absolute;
+            top: -30px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: white;
+            border-radius: 50%;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .cloud-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .flower {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            top: -50px;
+            animation: fall linear forwards;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .flower:before, .flower:after {
+            content: "";
+            position: absolute;
+            background-color: #FF9800;
+        }
+
+        .flower:before {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #FFC107 30%, #FF9800 70%);
+        }
+
+        .flower:after {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #FF5722;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .petal {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-color: #FFC107;
+            border-radius: 15px 0;
+            box-shadow: 0 0 5px rgba(255, 152, 0, 0.3);
+        }
+
+        .petal-1 { transform: rotate(0deg) translate(15px); }
+        .petal-2 { transform: rotate(45deg) translate(15px); }
+        .petal-3 { transform: rotate(90deg) translate(15px); }
+        .petal-4 { transform: rotate(135deg) translate(15px); }
+        .petal-5 { transform: rotate(180deg) translate(15px); }
+        .petal-6 { transform: rotate(225deg) translate(15px); }
+        .petal-7 { transform: rotate(270deg) translate(15px); }
+        .petal-8 { transform: rotate(315deg) translate(15px); }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0.7;
+            }
+        }
+
+        .lake {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 20vh;
+            background: linear-gradient(to bottom, rgba(81, 168, 220, 0.6), rgba(32, 136, 203, 0.8));
+            border-top-left-radius: 50% 20px;
+            border-top-right-radius: 50% 20px;
+            animation: ripple 3s infinite ease-in-out;
+            z-index: 1;
+        }
+
+        @keyframes ripple {
+            0%, 100% {
+                border-top-left-radius: 50% 20px;
+                border-top-right-radius: 50% 20px;
+            }
+            50% {
+                border-top-left-radius: 40% 30px;
+                border-top-right-radius: 60% 30px;
+            }
+        }
+
+        .note-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 70vh;
+            overflow-y: auto;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .note-paper {
+            background-color: white;
+            padding: 30px;
+            border-radius: 5px;
+            position: relative;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .note-paper:before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background-color: transparent;
+            border: 2px dashed #008259;
+            border-radius: 10px;
+            z-index: -1;
+        }
+
+        .note-content {
+            white-space: pre-line;
+            line-height: 1.6;
+            text-align: center;
+            color: #333;
+        }
+
+        .note-title {
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #008259;
+            text-align: center;
+        }
+
+        .signature {
+            text-align: right;
+            margin-top: 20px;
+            font-style: italic;
+            color: #008259;
+        }
+
+        /* Responsividad para iPhone 12 */
+        @media (max-width: 390px) {
+            .cloud-button {
+                padding: 20px 40px;
+                font-size: 1.2rem;
+            }
+            
+            .note-container {
+                width: 85%;
+                padding: 20px;
+            }
+            
+            .note-paper {
+                padding: 15px;
+            }
+            
+            .note-title {
+                font-size: 1.3rem;
+            }
+            
+            .flower {
+                width: 20px;
+                height: 20px;
+            }
+            
+            .petal {
+                width: 10px;
+                height: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="custom-cursor"></div>
+    <div id="background"></div>
+    
+    <div id="page1" class="page">
+        <button class="cloud-button">Haz click si te atreves</button>
+    </div>
+    
+    <div id="page2" class="page">
+        <div class="lake"></div>
+        <div class="note-container">
+            <div class="note-paper">
+                <div class="note-title">Para mi werita ❤️</div>
+                <div class="note-content">
+Se que no tenemos mucho de conocernos y de salir, pero creeme que desde el momento que comenzamos a hablar el primer día me atrapaste, es algo que no puedo explicarlo pero tampoco quiero hacerlo, es lo que lo hace bonito, quiero seguir conociendote por que estoy seguro de que esto que siento por ti seguirá incrementando, Esto de las flores amarillas es nuevo para mi jaja, en general todo este tipo de eventos, pero rápido iré entendiendo como funcionan jajaja, por ejemplo, no se que más escribir, podría escribir todo lo que me gusta de ti, pero creo que alcanzaría el limite de texto que puede procesar un componente, por que realmente son demasiadas cosas y eso que lo nuestro está empezando recien, eso también es algo increible, el como pese al poco tiempo, siento una gran familiaridad hacia ti, no me cabe el como es posible que conectar con alguien pueda ser así, antes de conocerte habría pensado que era una exageración y que no pasaba, pero ahora estoy segurisimo de que puede.
+
+
+Con más que decir, Feliz 21 te quiero ❤️
+
+
+Atte: Quien más va a ser que tu novio.
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Manejo del cursor personalizado
+        const cursor = document.getElementById('custom-cursor');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Cambio de color de fondo
+        const background = document.getElementById('background');
+        const colors = ['#008259', '#008d62', '#00986c', '#2ca880', '#57bd9e'];
+        let colorIndex = 0;
+        
+        function changeBackgroundColor() {
+            colorIndex = (colorIndex + 1) % colors.length;
+            background.style.backgroundColor = colors[colorIndex];
+        }
+        
+        // Iniciar con el primer color
+        background.style.backgroundColor = colors[0];
+        
+        // Cambiar color cada segundo
+        setInterval(changeBackgroundColor, 1000);
+        
+        // Manejo de la animación de flores y transición de páginas
+        const cloudButton = document.querySelector('.cloud-button');
+        const page1 = document.getElementById('page1');
+        const page2 = document.getElementById('page2');
+        
+        cloudButton.addEventListener('click', () => {
+            // Crear y animar las flores
+            createFlowers();
+            
+            // Cambiar a la página 2 después de la animación de flores
+            setTimeout(() => {
+                page1.style.opacity = '0';
+                page1.style.pointerEvents = 'none';
+                page2.style.opacity = '1';
+                page2.style.pointerEvents = 'auto';
+            }, 2000);
+        });
+        
+        function createFlowers() {
+            const flowerCount = window.innerWidth > 768 ? 40 : 20;
+            
+            for (let i = 0; i < flowerCount; i++) {
+                const flower = document.createElement('div');
+                flower.className = 'flower';
+                
+                // Crear pétalos
+                for (let j = 1; j <= 8; j++) {
+                    const petal = document.createElement('div');
+                    petal.className = `petal petal-${j}`;
+                    flower.appendChild(petal);
+                }
+                
+                // Posicionar aleatoriamente en el ancho
+                const randomX = Math.random() * window.innerWidth;
+                flower.style.left = `${randomX}px`;
+                
+                // Velocidad de caída aleatoria
+                const randomDuration = 3 + Math.random() * 3;
+                flower.style.animationDuration = `${randomDuration}s`;
+                
+                // Tamaño aleatorio
+                const randomSize = 0.7 + Math.random() * 0.6;
+                flower.style.transform = `scale(${randomSize})`;
+                
+                document.body.appendChild(flower);
+                
+                // Eliminar la flor después de la animación
+                setTimeout(() => {
+                    if (flower.parentNode === document.body) {
+                        document.body.removeChild(flower);
+                    }
+                }, randomDuration * 1000);
+            }
+        }
+    </script>
+</body>
+</html>
